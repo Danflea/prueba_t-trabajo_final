@@ -1,0 +1,626 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\usepackage{calligra}
+\usepackage{ragged2e}
+\justifying
+\usepackage{tocbibind}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+\vspace*{\baselineskip}
+
+{\bf\fontsize{19}{0}{\selectfont{ UNIVERSIDAD NACIONAL   AGRARIA \\ [0.5cm] LA MOLINA}}\\[0.5cm]
+\fontsize{10}{0}{DEPARTAMENTO ACADÉMICO ESTADÍSTICA E INFORMÁTICA}\\ [0.5cm]
+\bf\fontsize{14}{0}{\selectfont{ CARRERA PROFESIONAL DE ESTADÍSTICA E INFORMÁTICA}}
+}\\[0.5cm]
+\end{center}
+\begin{center}
+\vspace*{0.3in}
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=4.2cm,height=5cm]{imagen.jpg}
+\end{center}
+\end{figure}
+\vspace*{0.1in}
+\begin{Large}
+\textbf{Prueba t de student para \\  muestras independientes } \\
+\end{Large}
+\vspace{0.4cm}
+\begin{large}
+
+\begin{center}
+\textbf{Integrantes:}
+
+\begin{tabbing}
+    \hspace{2cm} Estrella Guerra, Danilo David \quad \= \quad         20220763 \\
+    \hspace{2cm} Gómez Vigo, Héctor Estéfano   \quad \= \quad      20230397 \\
+    \hspace{2cm} Montufar Paiva, Yeraldi Mercedes \quad  20230400 \\
+    \hspace{2cm} Rojas Taco, Fabiana Romina    \quad \= \quad      20220956 \\
+    \hspace{2cm} Zavala Malpartida, Kay Daniela L. \quad 20230420 \\
+\end{tabbing}
+
+\end{center}
+
+\end{large}
+
+\vspace*{0.2in}
+\begin{large}
+\textbf{Profesor:} \\
+\end{large}
+\vspace*{0.01in}
+
+\begin{large}
+Mg. Samuel HUAMANÍ  FLORES\\ [0.4cm]
+\end{large}
+
+
+\vspace*{0.3in}
+\begin{large}
+\textbf{LIMA-PERÚ }\\ [0.5cm]
+\textbf{2024}
+\end{large}
+\end{center}
+\end{titlepage}
+
+\newpage
+
+\renewcommand{\contentsname}{Indice de Contenido}
+
+\tableofcontents
+
+\newpage
+
+\section*{Introducción}\label{introducciuxf3n}
+\addcontentsline{toc}{section}{Introducción}
+
+La educación es uno de los pilares que sostienen la base de una sociedad
+justa y equitativa. Esto significa que el acceso a una educación
+secundaria adecuada es uno de los factores que realmente importan en el
+desarrollo personal y profesional de un adolescente. Este es uno de los
+mayores desafíos y las principales inequidades persistentes en el Perú,
+considerando el acceso y la calidad de la educación. El Estado aquí ha
+tratado de poner en acción varias políticas para mejorar la cobertura y
+la calidad de la educación; sin embargo, la brecha se muestra claramente
+entre las áreas rurales y urbanas. Según UNICEF, un poco más de un
+tercio de todos los niños de las áreas rurales de los países en
+desarrollo logran alcanzar los niveles mínimos de competencia en las
+competencias básicas de lectura y matemáticas, lo que refleja
+profundamente las profundas desigualdades del sistema educativo. Esto es
+particularmente relevante para una región como Ayacucho, donde las
+barreras geográficas, sociales y económicas tienen impactos adversos en
+el rendimiento escolar.
+
+La educación como medio de progreso en Ayacucho ``El incremento se
+evidencia con una sólida historia de conflictos y desigualdades en
+Ayacucho, más significativa en los últimos años''. Entre 2007 y 2015, se
+evidenció un aumento en términos de matrícula y retención de estudiantes
+en el nivel de educación secundaria. Sin embargo, persisten grandes
+disparidades en los rendimientos académicos de los dos lugares: áreas
+rurales y urbanas. Factores como que los estudiantes rurales han seguido
+enfrentando dificultades y desafíos en los aspectos más simples, como el
+acceso limitado a materiales educativos, la infraestructura deficiente
+en las escuelas y la falta de capacitación del personal docente. Estos
+han limitado el aprendizaje de calidad y han dificultado que los jóvenes
+desarrollen todo su potencial.
+
+Cabe señalar que la educación no sólo empodera a un individuo, sino que
+también tiene la implicación más profunda para el crecimiento económico
+y social de una comunidad. En esta área principalmente rural, las
+barreras educativas en Ayacucho solo han tenido el propósito de
+perpetuar el ciclo de pobreza y, por lo tanto, limitar el potencial de
+progreso de sus estudiantes.
+
+Esta relación entre el nivel educativo y el desarrollo regional está
+bien documentada por muchos autores que coinciden en que la inversión en
+educación es crucial para luchar contra la pobreza y fomentar el
+crecimiento sostenible. UNICEF (2016, p.~40). Las desigualdades actuales
+en la calidad de la educación entre los entornos urbanos y rurales
+niegan a los niños y jóvenes las mismas oportunidades de recibir una
+buena educación, lo que exige una corrección inmediata de la situación.
+
+Con estos antecedentes, el presente estudio se centrará principalmente
+en el análisis del nivel de educación en el segundo ciclo de la
+educación secundaria en Ayacucho, distinguiendo entre las zonas urbanas
+y rurales. El objetivo general del presente estudio es identificar
+disparidades generales llamativas en el logro de aprendizaje y los
+factores que las explican. Como tal, esta investigación podría servir
+para proporcionar una visión mucho más clara de la situación de la
+educación en Ayacucho y poder sugerir recomendaciones que apoyen la
+mejora de las condiciones educativas para las áreas más vulnerables
+dentro de la provincia.
+
+\newpage
+
+\section*{Planteamiento del Problema}\label{planteamiento-del-problema}
+\addcontentsline{toc}{section}{Planteamiento del Problema}
+
+La calidad del aprendizaje sigue siendo una preocupación en la mayor
+parte del país, como Ayacucho, incluso cuando se dan pasos hacia el
+aumento de la cobertura en educación en Perú. De hecho, con respecto al
+informe Ayacucho Cómo Vamos en Educación 2022, es evidente el hecho de
+que existe un marcado contraste en los logros académicos entre los
+estudiantes que viven en zonas urbanas y los que residen en las zonas
+rurales. Esto no solo señala problemas estructurales en términos de
+infraestructura y acceso a recursos educativos sino también el creciente
+grado de vulnerabilidad social y económica que atraviesan los
+estudiantes rurales. Por ejemplo, el informe sostiene que ``las
+deficiencias en la calidad educativa también se manifiestan en los
+resultados de las pruebas estandarizadas en las que los estudiantes
+rurales obtienen puntuaciones marcadamente más bajas que sus
+contrapartes urbanas'' (p.~24).
+
+Existe una enorme brecha en la comprensión lectora y las habilidades
+matemáticas de los estudiantes entre los estudiantes rurales y urbanos
+en Ayacucho. Las zonas rurales son aquellas de muy bajo rendimiento,
+ocasionado por los siguientes factores: falta de acceso a
+infraestructura tecnológica, escasez de docentes calificados y el escaso
+involucramiento de los padres en la educación de sus hijos (Ayacucho
+Cómo Vamos en Educación, 2022, p.~26).
+
+Estos factores profundizan la brecha en educación, haciendo más dura y
+directa la desigualdad, y a su vez, perjudicando las oportunidades de
+desarrollo de los educandos rurales. UNICEF ha señalado que millones de
+niños en todo el mundo no reciben igualdad de oportunidades para una
+educación de calidad, de lo cual Ayacucho no es la excepción. Como lo
+expresa UNICEF, esto es ``una violación de la Convención sobre los
+Derechos del Niño'' (Perú (2016), 2016, p.~28). Explica El estudio del
+nivel de educación en Ayacucho es importante no solo para entender las
+diferencias en el rendimiento académico sino también porque se abordan
+con medios de política pública. Se espera que el análisis de las
+disparidades educativas tenga un impacto en la formulación de
+intervenciones sensibles a las necesidades específicas de los
+estudiantes rurales. El otro punto que se abordará es la propuesta de
+mejora de la calidad en relación a estas desigualdades, y se asegurará
+que todos los estudiantes, sin importar el entorno en el que se
+encuentren, tengan oportunidades similares de aprendizaje. De esa
+manera, el estudio en este punto desarrolla estrategias para promover
+una educación inclusiva y justa en Ayacucho, respetando las diferencias
+entre lo urbano y lo rural, y propone la flexibilidad de las propuestas
+a las situaciones especiales de las zonas.
+
+\subsection*{Preguntas de
+investigación}\label{preguntas-de-investigaciuxf3n}
+\addcontentsline{toc}{subsection}{Preguntas de investigación}
+
+\begin{center}
+
+\justify
+\begin{enumerate}
+    \item ¿Existen diferencias significativas en los niveles de educación entre las zonas urbanas y rurales de Ayacucho, según los resultados de la prueba t de Student?
+    \item ¿Qué factores pueden explicar las diferencias en los niveles de educación entre las zonas rurales y urbanas, según los resultados de la prueba t de Student?
+    \item ¿Cómo varían las habilidades de comprensión lectora y matemáticas de los estudiantes según su ubicación rural o urbana, y son estas diferencias estadísticamente significativas?
+    \item Según los resultados de la prueba t de Student, ¿cómo predice el acceso a recursos tecnológicos el rendimiento académico de los estudiantes en las áreas rurales frente a las urbanas?
+\end{enumerate}
+
+\end{center}
+
+\section*{Marco teórico}\label{marco-teuxf3rico}
+\addcontentsline{toc}{section}{Marco teórico}
+
+\subsection*{La Prueba t para Muestras Independientes en el Análisis de
+la Desigualdad
+Educativa}\label{la-prueba-t-para-muestras-independientes-en-el-anuxe1lisis-de-la-desigualdad-educativa}
+\addcontentsline{toc}{subsection}{La Prueba t para Muestras
+Independientes en el Análisis de la Desigualdad Educativa}
+
+\vspace{0.5cm}
+
+Según DATAtab Team (2024), la prueba t para muestras independientes es
+una herramienta estadística adecuada para comparar las medias de dos
+muestras independientes, en este caso, los estudiantes de zonas rurales
+y urbanas. En este estudio, se utilizará la prueba t para evaluar si las
+diferencias en las calificaciones de los estudiantes de segundo año de
+secundaria de las zonas rurales y urbanas de Ayacucho son
+estadísticamente significativas. Este método permite determinar si las
+disparidades observadas en el rendimiento académico entre estos dos
+grupos son suficientemente grandes como para descartar la posibilidad de
+que sean producto del azar.
+
+Los supuestos de la prueba t incluyen la independencia de las
+observaciones, normalidad en la distribución de las calificaciones y
+homogeneidad de varianzas. En caso de cumplir con estos supuestos, se
+aplicará la fórmula de la prueba t para muestras independientes:
+
+\[
+t = \frac{X_1 - X_2}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}
+\]
+
+Donde:
+
+\begin{itemize}
+    \item $X_1$ y $X_2$ son las medias de los grupos urbano y rural.
+    \item $S_1^2$ y $S_2^2$ representan las varianzas de las calificaciones.
+    \item $n_1$ y $n_2$ son los tamaños muestrales de cada grupo.
+\end{itemize}
+
+El análisis estadístico basado en esta prueba permitirá validar o
+rechazar la hipótesis nula, que establece que no existe diferencia
+significativa en las calificaciones entre estudiantes urbanos y rurales.
+En caso de que el valor de la t calculada sea mayor que el valor
+crítico, se aceptará la hipótesis alternativa, indicando que sí hay una
+diferencia significativa en el rendimiento académico de estos dos
+grupos.
+
+\subsection*{Desigualdad Educativa entre Zonas Rurales y Urbanas en
+Perú}\label{desigualdad-educativa-entre-zonas-rurales-y-urbanas-en-peruxfa}
+\addcontentsline{toc}{subsection}{Desigualdad Educativa entre Zonas
+Rurales y Urbanas en Perú}
+
+\vspace{0.5cm}
+
+Uno de los principales problemas que enfrenta el sistema educativo
+peruano es la marcada desigualdad entre las áreas rurales y urbanas.
+Según Cueto (2004) (2004), los estudiantes rurales presentan
+significativamente menores logros académicos en comparación con los
+urbanos, debido a factores como la pobreza, la falta de acceso a
+servicios básicos y la baja calidad de la educación en estas zonas. En
+las áreas rurales, los estudiantes suelen tener el quechua como lengua
+materna, lo que añade barreras adicionales en su proceso educativo.
+Además, enfrentan el reto de aulas multigrado, en las cuales un solo
+maestro instruye a alumnos de diversas edades y niveles. Estas
+condiciones contrastan marcadamente con las de las áreas urbanas, donde
+los estudiantes tienen acceso a mejores recursos y una estructura
+educativa más favorable.
+
+\subsection*{Políticas Educativas en Zonas Rurales: Educación Bilingüe
+Intercultural}\label{poluxedticas-educativas-en-zonas-rurales-educaciuxf3n-bilinguxfce-intercultural}
+\addcontentsline{toc}{subsection}{Políticas Educativas en Zonas Rurales:
+Educación Bilingüe Intercultural}
+
+\vspace{0.5cm}
+
+El gobierno peruano ha desarrollado políticas para mejorar la educación
+en zonas rurales, siendo el programa de Educación Bilingüe Intercultural
+(EBI) uno de los más destacados. Este programa busca atender las
+necesidades de estudiantes que hablan lenguas indígenas, como el
+quechua. Sin embargo, Cueto (2004) (2004) señala que la implementación
+de estas políticas ha sido insuficiente y poco adaptada a las realidades
+locales, lo que limita su efectividad. Las intervenciones educativas
+deben ir más allá del ámbito escolar, abordando también las necesidades
+socioeconómicas de los estudiantes para lograr un impacto significativo
+en la calidad educativa.
+
+\subsection*{Factores Socioeconómicos y Rendimiento
+Académico}\label{factores-socioeconuxf3micos-y-rendimiento-acaduxe9mico}
+\addcontentsline{toc}{subsection}{Factores Socioeconómicos y Rendimiento
+Académico}
+
+\vspace{0.5cm}
+
+Diversos estudios confirman que el rendimiento escolar en las zonas
+rurales está influenciado por factores socioeconómicos, como el nivel de
+pobreza y la disponibilidad de recursos educativos en el hogar. Cueto
+(2004) (2004) destaca que aspectos familiares, como la educación de los
+padres y el acceso a materiales educativos en el hogar, tienen un
+impacto directo en el rendimiento académico. Adicionalmente, el
+analfabetismo en muchos hogares rurales agrava la falta de apoyo para
+los estudiantes, generando una desventaja que se refleja en los
+resultados académicos. La malnutrición es otro factor importante,
+afectando directamente el rendimiento de los estudiantes rurales,
+quienes suelen vivir en condiciones de pobreza extrema y con altos
+índices de desnutrición.
+
+\subsection*{Infraestructura y Recursos Educativos en las Zonas
+Rurales}\label{infraestructura-y-recursos-educativos-en-las-zonas-rurales}
+\addcontentsline{toc}{subsection}{Infraestructura y Recursos Educativos
+en las Zonas Rurales}
+
+\vspace{0.5cm}
+
+La falta de infraestructura adecuada es uno de los problemas más graves
+que enfrentan las escuelas rurales en Perú. Cueto (2004) menciona que
+muchas escuelas rurales carecen de servicios básicos, como electricidad
+o agua potable, lo que limita enormemente el proceso de
+enseñanza-aprendizaje. A diferencia de las áreas urbanas, donde la
+infraestructura educativa es mejor, las escuelas rurales se ven
+obligadas a operar en condiciones precarias, lo que contribuye al bajo
+rendimiento de los estudiantes. La falta de programas de apoyo para
+estudiantes con dificultades también perpetúa el rezago académico en
+estas áreas.
+
+\subsection*{Desigualdad Persistente en los Resultados de
+Aprendizaje}\label{desigualdad-persistente-en-los-resultados-de-aprendizaje}
+\addcontentsline{toc}{subsection}{Desigualdad Persistente en los
+Resultados de Aprendizaje}
+
+\vspace{0.5cm}
+
+A pesar de los esfuerzos recientes para mejorar la educación en las
+zonas rurales, la brecha en los resultados de aprendizaje entre áreas
+rurales y urbanas persiste. Según el Consejo Nacional de Educación
+(2016), las mejoras en el medio urbano están ocurriendo a un ritmo
+considerablemente más acelerado que en el rural. La falta de acceso a
+tecnologías educativas y el deficiente estado de la infraestructura
+escolar rural siguen siendo barreras críticas. En zonas urbanas, seis de
+cada diez escuelas primarias y siete de cada diez secundarias tienen
+acceso a internet, mientras que en las zonas rurales, solo seis de cada
+diez cuentan con electricidad, y cinco con agua potable (Consejo
+Nacional de Educación, 2016).
+
+\subsection*{Desafíos Lingüísticos en la Educación
+Rural}\label{desafuxedos-linguxfcuxedsticos-en-la-educaciuxf3n-rural}
+\addcontentsline{toc}{subsection}{Desafíos Lingüísticos en la Educación
+Rural}
+
+\vspace{0.5cm}
+
+En muchas regiones rurales, como Ayacucho, una gran parte de la
+población estudiantil tiene como lengua materna el quechua, lo que
+genera desafíos adicionales en su proceso educativo. Aunque existen
+programas como la Educación Bilingüe Intercultural, su implementación ha
+sido limitada y no responde adecuadamente a las necesidades locales.
+Cueto (2004) señala que el bajo dominio del castellano entre los
+estudiantes rurales repercute directamente en su rendimiento en áreas
+clave, como las matemáticas y la comprensión lectora, incrementando la
+tasa de deserción escolar.
+
+\subsection*{Condiciones Sociales y Educación
+Rural}\label{condiciones-sociales-y-educaciuxf3n-rural}
+\addcontentsline{toc}{subsection}{Condiciones Sociales y Educación
+Rural}
+
+\vspace{0.5cm}
+
+Las condiciones sociales en las zonas rurales tienen un impacto directo
+en la educación. La pobreza extrema, la desnutrición y las
+responsabilidades laborales de los estudiantes limitan su capacidad de
+asistir a la escuela y rendir adecuadamente. Además, las niñas enfrentan
+barreras adicionales, como las expectativas culturales de asumir roles
+domésticos o casarse a temprana edad, lo que contribuye a una mayor tasa
+de deserción escolar entre las niñas en comparación con los niños.
+
+\section*{Objetivos}\label{objetivos}
+\addcontentsline{toc}{section}{Objetivos}
+
+\subsection*{Objetivo general}\label{objetivo-general}
+\addcontentsline{toc}{subsection}{Objetivo general}
+
+\vspace{0.25cm}
+
+Probar la hipótesis de si existe una diferencia en el nivel educativo
+entre estudiantes de zonas rurales y urbanas en Ayacucho utilizando la
+prueba t para muestras independientes.
+
+\subsection*{Objetivos específicos}\label{objetivos-especuxedficos}
+\addcontentsline{toc}{subsection}{Objetivos específicos}
+
+\vspace{0.5cm}
+
+\begin{itemize}
+    \item Comparar si existe una diferencia significativa en el rendimiento académico de los estudiantes de zonas rurales y urbanas de Ayacucho, utilizando los resultados de la prueba t de Student.
+    \item Explicar los factores responsables de la diferencia en el nivel de logro educativo entre los estudiantes rurales y urbanos en Ayacucho.
+    \item Diseñar una prueba para los estudiantes rurales y urbanos, y evaluar la diferencia entre las medias de las calificaciones de ambas categorías.
+    \item Comparar y contrastar el impacto del acceso a recursos tecnológicos en el rendimiento de los estudiantes en las zonas rurales frente a las urbanas utilizando los resultados de la prueba t.
+    \item Observar cualquier diferencia significativa en el nivel educativo alcanzado por aquellos estudiantes con y sin acceso a programas bilingües en los entornos rurales y urbanos.
+\end{itemize}
+
+\section*{Hipótesis}\label{hipuxf3tesis}
+\addcontentsline{toc}{section}{Hipótesis}
+
+\subsection*{Hipótesis general}\label{hipuxf3tesis-general}
+\addcontentsline{toc}{subsection}{Hipótesis general}
+
+\begin{itemize}
+    \item \textbf{H$_{0}$:} No hay diferencia significativa en el rendimiento académico entre los estudiantes de zonas rurales y urbanas en Ayacucho.
+
+  \item \textbf{H$_{1}$:} Sí hay una diferencia significativa en el rendimiento académico entre los estudiantes de zonas rurales y urbanas en Ayacucho.
+
+\end{itemize}
+
+\subsection*{Hipótesis específicas}\label{hipuxf3tesis-especuxedficas}
+\addcontentsline{toc}{subsection}{Hipótesis específicas}
+
+\begin{itemize}
+    \item \textbf{H$_{0}$:} No hay diferencia significativa en los puntajes de comprensión lectora entre estudiantes rurales y urbanos.
+    \item \textbf{H$_{1}$:} Hay una diferencia significativa en los puntajes de comprensión lectora entre estudiantes rurales y urbanos.
+    \item \textbf{H$_{0}$:} No hay diferencia significativa en los puntajes de matemáticas entre estudiantes rurales y urbanos.
+    \item \textbf{H$_{1}$:} Hay una diferencia significativa en los puntajes de matemáticas entre estudiantes rurales y urbanos.
+    \item \textbf{H$_{0}$:} El acceso a recursos tecnológicos no afecta de manera significativa el rendimiento académico de los estudiantes rurales y urbanos.
+    \item \textbf{H$_{1}$:} El acceso a recursos tecnológicos sí afecta de manera significativa el rendimiento académico de los estudiantes rurales y urbanos.
+    \item \textbf{H$_{0}$:} No hay una diferencia significativa en el nivel educativo entre estudiantes con y sin acceso a programas bilingües.
+    \item \textbf{H$_{1}$:} Sí hay una diferencia significativa en el nivel educativo entre estudiantes con y sin acceso a programas bilingües.
+\end{itemize}
+
+\section*{Metodología}\label{metodologuxeda}
+\addcontentsline{toc}{section}{Metodología}
+
+\subsection*{Operacionalización de
+variables}\label{operacionalizaciuxf3n-de-variables}
+\addcontentsline{toc}{subsection}{Operacionalización de variables}
+
+A continuación, se describen las principales variables del estudio,
+indicando su significado y las formas en que serán medidas o
+categorizadas.
+
+\begin{itemize}
+    \item ID-IE: Identificador único de la institución educativa. Se refiere a un código numérico que identifica de manera exclusiva cada institución.
+    \item seccion: Nombre de la sección. Variable cualitativa que indica a qué grupo específico pertenece el estudiante.
+    \item cor-est: Correlativo del estudiante. Número de registro único para cada estudiante en la base de datos.
+    \item sexo: Sexo del estudiante. Variable categórica con dos alternativas: masculino. Alternativas: Hombre, Mujer
+    \item gestion2: Gestión de la institución (pública o privada). Variable categórica que indica el tipo de gestión de la institución educativa. Alternativas: Público, Privado
+    \item area: Área geográfica en la que se encuentra la institución. Variable categórica que clasifica el área en: Alternativas: Urbana, Rural
+    \item caracteristica2: Indica el tipo de modalidad educativa que se aplica en la institución, donde "Polidocente completo" se refiere a una escuela donde un único docente es responsable de enseñar múltiples grados o niveles de educación, proporcionando una atención más personalizada a los estudiantes. Alternativa: Polidocente completo
+    \item cod-DRE: Código de la Dirección Regional de Educación (DRE). Variable numérica que identifica la jurisdicción de la DRE a la que pertenece la institución
+    \item nom-dre: Nombre de la DRE. Variable cualitativa que proporciona el nombre correspondiente al código de la DRE.
+    \item cod-UGEL: Código de la UGEL (Unidad de Gestión Educativa Local). Identificación numérica que clasifica a la UGEL a la que pertenece la institución.
+    \item nom-ugel: Nombre de la UGEL. Variable cualitativa que representa el nombre correspondiente al código de la UGEL.
+    \item codegeo: Código geográfico. Número que identifica la ubicación geográfica precisa de la institución.
+    \item departamento: Departamento. Variable cualitativa que representa la región administrativa a la que pertenece la institución.
+    \item provincia: Provincia en la que se ubica la institución educativa. Variable categórica que identifica la división política de segundo nivel.
+    \item distrito: Distrito donde se localiza la institución. Variable categórica que identifica la subdivisión más específica dentro de la provincia.
+    \item Estrato-DRE: Estrato dentro de la DRE. Variable que clasifica a las instituciones según su nivel de desempeño dentro de la jurisdicción de la DRE.
+    \item M500-EM-2S-2023-CT: Medida en lectura. Variable cuantitativa que refleja el puntaje de comprensión lectora de los estudiantes evaluados.
+    \item grupo-EM-2S-2023-CT: Nivel de desempeño en lectura. Variable categórica que clasifica a los estudiantes según su nivel de rendimiento en la prueba de lectura. Alternativas: Previo al inicio, en inicio, en proceso, satisfactorio
+    \item M500-EM-2S-2023-MA: Medida en matemáticas. Variable cuantitativa que refleja el puntaje obtenido por los estudiantes en la evaluación de matemáticas.
+    \item grupo-EM-2S-2023-MA: Nivel de desempeño en matemáticas. Variable categórica que clasifica a los estudiantes según su rendimiento en matemáticas. Alternativas: Previo al inicio, en inicio, en proceso, satisfactorio
+    \item M500-EM-2S-2023-CS: Medida en ciencias sociales. Variable cuantitativa que refleja el puntaje de los estudiantes en la evaluación de ciencias sociales.
+    \item grupo-EM-2S-2023-CS: Nivel de desempeño en ciencias sociales. Variable categórica que clasifica a los estudiantes según su rendimiento en ciencias sociales. Alternativas: Previo al inicio, en inicio, en proceso, satisfactorio
+    \item peso-CT: Peso correspondiente a la evaluación en lectura. Variable cuantitativa que pondera el peso del puntaje de lectura en el análisis general.
+    \item peso-MA: Peso correspondiente a la evaluación en matemáticas. Variable cuantitativa que pondera el peso del puntaje en matemáticas en el análisis.
+    \item peso-CS: Peso correspondiente a la evaluación en ciencias sociales. Variable cuantitativa que pondera el peso del puntaje de ciencias sociales en el análisis.
+
+\end{itemize}
+
+\subsection*{Población}\label{poblaciuxf3n}
+\addcontentsline{toc}{subsection}{Población}
+
+La población de este estudio está constituida por todas las
+instituciones educativas de la región de Ayacucho que imparten educación
+básica regular.
+
+Esto incluye escuelas públicas y privadas que presentan características
+similares en términos de gestión y nivel educativo. La población se
+delimita temporalmente al año académico 2023, lo que permite una
+evaluación actualizada y pertinente de los niveles educativos en las
+diferentes áreas de estudio.
+
+\subsection*{Muestra}\label{muestra}
+\addcontentsline{toc}{subsection}{Muestra}
+
+El uso de un diseño de muestreo estratificado permite dividir la
+población en dos estratos claramente diferenciados: el rural y el
+urbano. Esta división se hace con el objetivo de que ambos entornos
+geográficos estén justamente representados en la muestra, ya que se
+espera que sus niveles de logros educativos sean notablemente distintos.
+
+El muestreo estratificado es adecuado porque los estudiantes en áreas
+rurales y urbanas pueden tener ciertas características que influyen en
+su rendimiento académico. Este método asegura una estimación más precisa
+de la diferencia de desempeño entre ambos grupos en comparación con el
+muestreo aleatorio simple, ya que reduce la variabilidad dentro de cada
+estrato.
+
+Dentro de cada estrato, se realizará un muestreo aleatorio simple para
+seleccionar a los estudiantes. De esta manera, se mantendrá la
+aleatoriedad y se evitarán sesgos dentro de cada subgrupo.
+
+\subsection*{Procedimiento}\label{procedimiento}
+\addcontentsline{toc}{subsection}{Procedimiento}
+
+\section*{Resultados}\label{resultados}
+\addcontentsline{toc}{section}{Resultados}
+
+\section*{Conclusiones}\label{conclusiones}
+\addcontentsline{toc}{section}{Conclusiones}
+
+\newpage
+
+\section*{Referencias}\label{referencias}
+\addcontentsline{toc}{section}{Referencias}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-Cueto}
+Cueto, S. (2004). \emph{Factores predictivos del rendimiento escolar,
+deserci{ó}n e ingreso a educaci{ó}n secundaria en una muestra de
+estudiantes de zonas rurales del per{ú}}.
+
+\bibitem[\citeproctext]{ref-UNICEF}
+Perú, UNICEF. R. en. (2016). \emph{Estado mundial de la infancia 2016:
+Acabar con las inequidades para brindarle oportunidades justas a toda la
+niñez}. UNICEF.
+
+\end{CSLReferences}
+
+\end{document}

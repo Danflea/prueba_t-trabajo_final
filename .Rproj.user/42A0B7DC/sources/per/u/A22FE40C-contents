@@ -1,0 +1,15 @@
+
+library(readxl)
+BD <- read_excel("BD_2S ENLA muestral 2023.xlsx")
+View(BD)
+
+
+library(dplyr)
+
+data_ayacucho <- BD %>% filter(departamento == "AYACUCHO")
+
+summarise(data_ayacucho$departamento)
+
+data_rural_aya <- data_ayacucho %>% filter(area=="Rural")
+
+data_urbano_aya <- data_ayacucho %>% filter(area=="Urbana")
