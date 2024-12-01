@@ -37,6 +37,46 @@
 \makeatother
 \usepackage{xcolor}
 \usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -91,6 +131,20 @@
 \usepackage{ragged2e}
 \justifying
 \usepackage{tocbibind}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -502,9 +556,9 @@ prueba t para muestras independientes.
 \addcontentsline{toc}{subsection}{Hipótesis general}
 
 \begin{itemize}
-    \item \textbf{H$_{0}$:} No hay diferencia significativa en el rendimiento académico entre los estudiantes de zonas rurales y urbanas en Ayacucho.
+    \item \textbf{H$_{0}$:} El rendimiento académico promedio en el área de matemáticas de los estudiantes de sexo femenino es igual al de los estudiantes de sexo masculino en zonas rurales de Ayacucho.
 
-  \item \textbf{H$_{1}$:} Sí hay una diferencia significativa en el rendimiento académico entre los estudiantes de zonas rurales y urbanas en Ayacucho.
+  \item \textbf{H$_{1}$:} SEl rendimiento académico promedio en el área de matemáticas de los estudiantes de sexo femenino es diferente al de los estudiantes de sexo masculino en zonas rurales de Ayacucho.
 
 \end{itemize}
 
@@ -534,31 +588,9 @@ indicando su significado y las formas en que serán medidas o
 categorizadas.
 
 \begin{itemize}
-    \item ID-IE: Identificador único de la institución educativa. Se refiere a un código numérico que identifica de manera exclusiva cada institución.
-    \item seccion: Nombre de la sección. Variable cualitativa que indica a qué grupo específico pertenece el estudiante.
-    \item cor-est: Correlativo del estudiante. Número de registro único para cada estudiante en la base de datos.
     \item sexo: Sexo del estudiante. Variable categórica con dos alternativas: masculino. Alternativas: Hombre, Mujer
-    \item gestion2: Gestión de la institución (pública o privada). Variable categórica que indica el tipo de gestión de la institución educativa. Alternativas: Público, Privado
-    \item area: Área geográfica en la que se encuentra la institución. Variable categórica que clasifica el área en: Alternativas: Urbana, Rural
-    \item caracteristica2: Indica el tipo de modalidad educativa que se aplica en la institución, donde "Polidocente completo" se refiere a una escuela donde un único docente es responsable de enseñar múltiples grados o niveles de educación, proporcionando una atención más personalizada a los estudiantes. Alternativa: Polidocente completo
-    \item cod-DRE: Código de la Dirección Regional de Educación (DRE). Variable numérica que identifica la jurisdicción de la DRE a la que pertenece la institución
-    \item nom-dre: Nombre de la DRE. Variable cualitativa que proporciona el nombre correspondiente al código de la DRE.
-    \item cod-UGEL: Código de la UGEL (Unidad de Gestión Educativa Local). Identificación numérica que clasifica a la UGEL a la que pertenece la institución.
-    \item nom-ugel: Nombre de la UGEL. Variable cualitativa que representa el nombre correspondiente al código de la UGEL.
-    \item codegeo: Código geográfico. Número que identifica la ubicación geográfica precisa de la institución.
     \item departamento: Departamento. Variable cualitativa que representa la región administrativa a la que pertenece la institución.
-    \item provincia: Provincia en la que se ubica la institución educativa. Variable categórica que identifica la división política de segundo nivel.
-    \item distrito: Distrito donde se localiza la institución. Variable categórica que identifica la subdivisión más específica dentro de la provincia.
-    \item Estrato-DRE: Estrato dentro de la DRE. Variable que clasifica a las instituciones según su nivel de desempeño dentro de la jurisdicción de la DRE.
-    \item M500-EM-2S-2023-CT: Medida en lectura. Variable cuantitativa que refleja el puntaje de comprensión lectora de los estudiantes evaluados.
-    \item grupo-EM-2S-2023-CT: Nivel de desempeño en lectura. Variable categórica que clasifica a los estudiantes según su nivel de rendimiento en la prueba de lectura. Alternativas: Previo al inicio, en inicio, en proceso, satisfactorio
     \item M500-EM-2S-2023-MA: Medida en matemáticas. Variable cuantitativa que refleja el puntaje obtenido por los estudiantes en la evaluación de matemáticas.
-    \item grupo-EM-2S-2023-MA: Nivel de desempeño en matemáticas. Variable categórica que clasifica a los estudiantes según su rendimiento en matemáticas. Alternativas: Previo al inicio, en inicio, en proceso, satisfactorio
-    \item M500-EM-2S-2023-CS: Medida en ciencias sociales. Variable cuantitativa que refleja el puntaje de los estudiantes en la evaluación de ciencias sociales.
-    \item grupo-EM-2S-2023-CS: Nivel de desempeño en ciencias sociales. Variable categórica que clasifica a los estudiantes según su rendimiento en ciencias sociales. Alternativas: Previo al inicio, en inicio, en proceso, satisfactorio
-    \item peso-CT: Peso correspondiente a la evaluación en lectura. Variable cuantitativa que pondera el peso del puntaje de lectura en el análisis general.
-    \item peso-MA: Peso correspondiente a la evaluación en matemáticas. Variable cuantitativa que pondera el peso del puntaje en matemáticas en el análisis.
-    \item peso-CS: Peso correspondiente a la evaluación en ciencias sociales. Variable cuantitativa que pondera el peso del puntaje de ciencias sociales en el análisis.
 
 \end{itemize}
 
@@ -572,28 +604,111 @@ básica regular.
 Esto incluye escuelas públicas y privadas que presentan características
 similares en términos de gestión y nivel educativo. La población se
 delimita temporalmente al año académico 2023, lo que permite una
-evaluación actualizada y pertinente de los niveles educativos en las
-diferentes áreas de estudio.
+evaluación actualizada y pertinente del nivel educativo en el área de
+matemáticas.
+
+\subsubsection*{Normalidad de la
+población}\label{normalidad-de-la-poblaciuxf3n}
+\addcontentsline{toc}{subsubsection}{Normalidad de la población}
+
+Primero debemos de comprobar que nuestra población sigue una
+distribución normal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(magrittr)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\NormalTok{BD }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"BD\_2S ENLA muestral 2023.xlsx"}\NormalTok{)}
+
+\NormalTok{data\_rural }\OtherTok{\textless{}{-}}\NormalTok{ BD }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(departamento }\SpecialCharTok{==} \StringTok{"AYACUCHO"}\NormalTok{, area }\SpecialCharTok{==} \StringTok{"Rural"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"sexo"}\NormalTok{, }\StringTok{"M500\_EM\_2S\_2023\_MA"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{na.omit}\NormalTok{()}
+
+\FunctionTok{shapiro.test}\NormalTok{(data\_rural}\SpecialCharTok{$}\NormalTok{M500\_EM\_2S\_2023\_MA)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  data_rural$M500_EM_2S_2023_MA
+## W = 0.9864, p-value = 2.823e-06
+\end{verbatim}
+
+Según el criterio de p\_valor, la población no sigue una distribución
+normal.\\
+Para detectar posibles datos atipicos vamos a usar el método z-score.
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  data_rural_sin$M500_EM_2S_2023_MA
+## W = 0.998, p-value = 0.5628
+\end{verbatim}
+
+Nuevamente usando el test de \texttt{Shapiro-wilk} y por el criterio de
+p\_valor comprobamos que el
+
+\[p_{valor}=0.5628>\alpha=0.05\]\\
+y se verifica que nuestra población ahora sigue una distribución normal.
+
+\begin{center}\includegraphics{trabajo_final_analisis-estadistico_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
+\subsubsection*{Homogeneidad de
+Varianzas}\label{homogeneidad-de-varianzas}
+\addcontentsline{toc}{subsubsection}{Homogeneidad de Varianzas}
+
+\[H_{0}: \text{Las varianzas de las notas entre hombres y mujeres son iguales.}\]\\
+\[H_{0}: \text{Las varianzas de las notas entre hombres y mujeres son diferentes.}\]
+
+\begin{verbatim}
+## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  data_rural_sin$M500_EM_2S_2023_MA by data_rural_sin$sexo
+## Bartlett's K-squared = 0.21642, df = 1, p-value = 0.6418
+\end{verbatim}
+
+Dado que \(p_{valor}=0.6418>\alpha=0.05\), no se rechaza la hipótesis
+nula. Esto implica que no hay evidencia estadísticamente significativa
+para afirmar que las varianzas de las notas entre hombres y mujeres son
+diferentes.
+
+\begin{center}\includegraphics{trabajo_final_analisis-estadistico_files/figure-latex/unnamed-chunk-5-1} \end{center}
+
+\begin{table}[!h]
+\centering
+\caption{\label{tab:Estadisticas genero}Resumen de las notas por género}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+sexo & Media (\(\mu\)) & Varianza (\(\sigma^{2}\)) & Desviación Estándar (\(\sigma\)) & Tamaño de la población (\(N\))\\
+\midrule
+\cellcolor{gray!10}{Hombre} & \cellcolor{gray!10}{549.3282} & \cellcolor{gray!10}{4936.985} & \cellcolor{gray!10}{70.26368} & \cellcolor{gray!10}{342}\\
+Mujer & 538.1761 & 4700.335 & 68.55899 & 380\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection*{Muestra}\label{muestra}
 \addcontentsline{toc}{subsection}{Muestra}
 
 El uso de un diseño de muestreo estratificado permite dividir la
-población en dos estratos claramente diferenciados: el rural y el
-urbano. Esta división se hace con el objetivo de que ambos entornos
-geográficos estén justamente representados en la muestra, ya que se
-espera que sus niveles de logros educativos sean notablemente distintos.
-
-El muestreo estratificado es adecuado porque los estudiantes en áreas
-rurales y urbanas pueden tener ciertas características que influyen en
-su rendimiento académico. Este método asegura una estimación más precisa
-de la diferencia de desempeño entre ambos grupos en comparación con el
-muestreo aleatorio simple, ya que reduce la variabilidad dentro de cada
-estrato.
+población en dos estratos claramente diferenciados: el masculino y el
+femenino. Esta división se hace con el objetivo de que ambos génneros
+estén justamente representados en la muestra, ya que se espera que sus
+niveles de logros educativos sean similares.
 
 Dentro de cada estrato, se realizará un muestreo aleatorio simple para
 seleccionar a los estudiantes. De esta manera, se mantendrá la
 aleatoriedad y se evitarán sesgos dentro de cada subgrupo.
+
+Determinamos el tamaño de la muestra total por muestreo estratificado
+(n) en 160 estudiantes.
 
 \subsection*{Procedimiento}\label{procedimiento}
 \addcontentsline{toc}{subsection}{Procedimiento}

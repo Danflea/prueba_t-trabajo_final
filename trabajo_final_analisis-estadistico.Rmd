@@ -222,9 +222,9 @@ Probar la hipótesis de si existe una diferencia en el nivel educativo entre est
 ## Hipótesis general {-}  
 
 \begin{itemize}
-    \item \textbf{H$_{0}$:} No hay diferencia significativa en el rendimiento académico entre los estudiantes de zonas rurales y urbanas en Ayacucho.
+    \item \textbf{H$_{0}$:} El rendimiento académico promedio en el área de matemáticas de los estudiantes de sexo femenino es igual al de los estudiantes de sexo masculino en zonas rurales de Ayacucho.
 
-  \item \textbf{H$_{1}$:} Sí hay una diferencia significativa en el rendimiento académico entre los estudiantes de zonas rurales y urbanas en Ayacucho.
+  \item \textbf{H$_{1}$:} SEl rendimiento académico promedio en el área de matemáticas de los estudiantes de sexo femenino es diferente al de los estudiantes de sexo masculino en zonas rurales de Ayacucho.
 
 \end{itemize}
 
@@ -248,31 +248,9 @@ Probar la hipótesis de si existe una diferencia en el nivel educativo entre est
 A continuación, se describen las principales variables del estudio, indicando su significado y las formas en que serán medidas o categorizadas.  
 
 \begin{itemize}
-    \item ID-IE: Identificador único de la institución educativa. Se refiere a un código numérico que identifica de manera exclusiva cada institución.
-    \item seccion: Nombre de la sección. Variable cualitativa que indica a qué grupo específico pertenece el estudiante.
-    \item cor-est: Correlativo del estudiante. Número de registro único para cada estudiante en la base de datos.
     \item sexo: Sexo del estudiante. Variable categórica con dos alternativas: masculino. Alternativas: Hombre, Mujer
-    \item gestion2: Gestión de la institución (pública o privada). Variable categórica que indica el tipo de gestión de la institución educativa. Alternativas: Público, Privado
-    \item area: Área geográfica en la que se encuentra la institución. Variable categórica que clasifica el área en: Alternativas: Urbana, Rural
-    \item caracteristica2: Indica el tipo de modalidad educativa que se aplica en la institución, donde "Polidocente completo" se refiere a una escuela donde un único docente es responsable de enseñar múltiples grados o niveles de educación, proporcionando una atención más personalizada a los estudiantes. Alternativa: Polidocente completo
-    \item cod-DRE: Código de la Dirección Regional de Educación (DRE). Variable numérica que identifica la jurisdicción de la DRE a la que pertenece la institución
-    \item nom-dre: Nombre de la DRE. Variable cualitativa que proporciona el nombre correspondiente al código de la DRE.
-    \item cod-UGEL: Código de la UGEL (Unidad de Gestión Educativa Local). Identificación numérica que clasifica a la UGEL a la que pertenece la institución.
-    \item nom-ugel: Nombre de la UGEL. Variable cualitativa que representa el nombre correspondiente al código de la UGEL.
-    \item codegeo: Código geográfico. Número que identifica la ubicación geográfica precisa de la institución.
     \item departamento: Departamento. Variable cualitativa que representa la región administrativa a la que pertenece la institución.
-    \item provincia: Provincia en la que se ubica la institución educativa. Variable categórica que identifica la división política de segundo nivel.
-    \item distrito: Distrito donde se localiza la institución. Variable categórica que identifica la subdivisión más específica dentro de la provincia.
-    \item Estrato-DRE: Estrato dentro de la DRE. Variable que clasifica a las instituciones según su nivel de desempeño dentro de la jurisdicción de la DRE.
-    \item M500-EM-2S-2023-CT: Medida en lectura. Variable cuantitativa que refleja el puntaje de comprensión lectora de los estudiantes evaluados.
-    \item grupo-EM-2S-2023-CT: Nivel de desempeño en lectura. Variable categórica que clasifica a los estudiantes según su nivel de rendimiento en la prueba de lectura. Alternativas: Previo al inicio, en inicio, en proceso, satisfactorio
     \item M500-EM-2S-2023-MA: Medida en matemáticas. Variable cuantitativa que refleja el puntaje obtenido por los estudiantes en la evaluación de matemáticas.
-    \item grupo-EM-2S-2023-MA: Nivel de desempeño en matemáticas. Variable categórica que clasifica a los estudiantes según su rendimiento en matemáticas. Alternativas: Previo al inicio, en inicio, en proceso, satisfactorio
-    \item M500-EM-2S-2023-CS: Medida en ciencias sociales. Variable cuantitativa que refleja el puntaje de los estudiantes en la evaluación de ciencias sociales.
-    \item grupo-EM-2S-2023-CS: Nivel de desempeño en ciencias sociales. Variable categórica que clasifica a los estudiantes según su rendimiento en ciencias sociales. Alternativas: Previo al inicio, en inicio, en proceso, satisfactorio
-    \item peso-CT: Peso correspondiente a la evaluación en lectura. Variable cuantitativa que pondera el peso del puntaje de lectura en el análisis general.
-    \item peso-MA: Peso correspondiente a la evaluación en matemáticas. Variable cuantitativa que pondera el peso del puntaje en matemáticas en el análisis.
-    \item peso-CS: Peso correspondiente a la evaluación en ciencias sociales. Variable cuantitativa que pondera el peso del puntaje de ciencias sociales en el análisis.
 
 \end{itemize}
 
@@ -281,17 +259,106 @@ A continuación, se describen las principales variables del estudio, indicando s
 La población de este estudio está constituida por todas las instituciones educativas de la región de Ayacucho que imparten educación básica regular.  
   
   
-Esto incluye escuelas públicas y privadas que presentan características similares en términos de gestión y nivel educativo. La población se delimita temporalmente al año académico 2023, lo que permite una evaluación actualizada y pertinente de los niveles educativos en las diferentes áreas de estudio.
+Esto incluye escuelas públicas y privadas que presentan características similares en términos de gestión y nivel educativo. La población se delimita temporalmente al año académico 2023, lo que permite una evaluación actualizada y pertinente del nivel educativo en el área de matemáticas.  
+
+### Normalidad de la población {-}  
+
+Primero debemos de comprobar que nuestra población sigue una distribución normal.  
+
+```{r echo=TRUE}
+library(readxl)
+library(magrittr)
+library(dplyr)
+BD <- read_excel("BD_2S ENLA muestral 2023.xlsx")
+
+data_rural <- BD %>% 
+  filter(departamento == "AYACUCHO", area == "Rural") %>% 
+  select(c("sexo", "M500_EM_2S_2023_MA")) %>% 
+  na.omit()
+
+shapiro.test(data_rural$M500_EM_2S_2023_MA)
+```  
+
+Según el criterio de p_valor, la población no sigue una distribución normal.  
+Para detectar posibles datos atipicos vamos a usar el método z-score.  
+
+```{r}
+z_score <- scale(data_rural$M500_EM_2S_2023_MA)
+extremos_m <- which(abs(z_score)>3)
+data_rural_sin <- data_rural[-extremos_m, ]
+shapiro.test(data_rural_sin$M500_EM_2S_2023_MA)
+```  
+
+Nuevamente usando el test de `Shapiro-wilk` y por el criterio de p_valor comprobamos que el  
+
+$$p_{valor}=0.5628>\alpha=0.05$$  
+y se verifica que nuestra población ahora sigue una distribución normal.  
+
+
+```{r, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+ggplot(data_rural_sin, aes(x = data_rural_sin$M500_EM_2S_2023_MA)) +
+  geom_density(fill = "blue", alpha = 0.3) +
+  labs(title = "Gráfico de Densidad", x = "Nota", y = "Densidad") +
+  theme_minimal()
+```    
+
+### Homogeneidad de Varianzas {-}  
+
+$$H_{0}: \text{Las varianzas de las notas entre hombres y mujeres son iguales.}$$  
+$$H_{0}: \text{Las varianzas de las notas entre hombres y mujeres son diferentes.}$$  
+
+```{r}
+bartlett.test(data_rural_sin$M500_EM_2S_2023_MA~data_rural_sin$sexo, data_rural_sin)
+```
+
+
+Dado que $p_{valor}=0.6418>\alpha=0.05$, no se rechaza la hipótesis nula. Esto implica que no hay evidencia estadísticamente significativa para afirmar que las varianzas de las notas entre hombres y mujeres son diferentes.  
+
+```{r, fig.width=4, fig.height=3, fig.align='center'}
+library(ggplot2)
+
+# Calcular residuales por grupo
+residuales <- lm(M500_EM_2S_2023_MA ~ sexo, data = data_rural_sin)$residuals
+data_rural_sin$residuales <- residuales
+
+# Gráfico de residuales
+ggplot(data_rural_sin, aes(x = sexo, y = residuales)) +
+  geom_boxplot(fill = "skyblue", alpha = 0.5) +
+  labs(title = "Gráfico de Residuales", x = "Género", y = "Residuales") +
+  theme_minimal()
+
+```
+
+
+```{r Estadisticas genero, }
+# Calcular el resumen de estadísticas por genero
+resumen_nota <- data_rural_sin %>%
+    group_by(sexo) %>%
+    summarise(
+        "Media (\\(\\mu\\))" = mean(M500_EM_2S_2023_MA, na.rm = TRUE),
+        "Varianza (\\(\\sigma^{2}\\))" = var(M500_EM_2S_2023_MA, na.rm = TRUE),
+        "Desviación Estándar (\\(\\sigma\\))" = sd(M500_EM_2S_2023_MA, na.rm = TRUE),
+        "Tamaño de la población (\\(N\\))" = n()
+    )
+
+# Imprimir el resumen en una tabla usando kable
+knitr::kable(resumen_nota, format = "latex", booktabs = TRUE, escape = FALSE,
+             caption = "Resumen de las notas por género") %>%
+  kableExtra::kable_styling(latex_options = c("striped", "hold_position"), full_width = FALSE)
+```
+
+
 
 ## Muestra {-}  
 
-El uso de un diseño de muestreo estratificado permite dividir la población en dos estratos claramente diferenciados: el rural y el urbano. Esta división se hace con el objetivo de que ambos entornos geográficos estén justamente representados en la muestra, ya que se espera que sus niveles de logros educativos sean notablemente distintos.  
-  
-  
-El muestreo estratificado es adecuado porque los estudiantes en áreas rurales y urbanas pueden tener ciertas características que influyen en su rendimiento académico. Este método asegura una estimación más precisa de la diferencia de desempeño entre ambos grupos en comparación con el muestreo aleatorio simple, ya que reduce la variabilidad dentro de cada estrato.  
-  
-  
-Dentro de cada estrato, se realizará un muestreo aleatorio simple para seleccionar a los estudiantes. De esta manera, se mantendrá la aleatoriedad y se evitarán sesgos dentro de cada subgrupo.
+El uso de un diseño de muestreo estratificado permite dividir la población en dos estratos claramente diferenciados: el masculino y el femenino. Esta división se hace con el objetivo de que ambos génneros estén justamente representados en la muestra, ya que se espera que sus niveles de logros educativos sean similares.  
+
+Dentro de cada estrato, se realizará un muestreo aleatorio simple para seleccionar a los estudiantes. De esta manera, se mantendrá la aleatoriedad y se evitarán sesgos dentro de cada subgrupo.  
+
+Determinamos el tamaño de la muestra total por muestreo estratificado (n) en 160 estudiantes.  
+
+
 
 ## Procedimiento {-}  
 
