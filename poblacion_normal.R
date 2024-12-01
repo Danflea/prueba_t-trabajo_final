@@ -1,18 +1,17 @@
 
 library(readxl)
-BD <- read_excel("BD_2S ENLA muestral 2023.xlsx")
-View(BD)
-
 library(magrittr)
 library(dplyr)
 
-data_ayacucho_nuevo <- BD %>% 
+BD <- read_excel("BD_2S ENLA muestral 2023.xlsx")
+
+data_rural <- BD %>% 
   filter(departamento == "AYACUCHO", area == "Rural") %>% 
   select(c("sexo", "M500_EM_2S_2023_MA")) %>% 
   na.omit()
-
-shapiro.test(data_ayacucho_nuevo$M500_EM_2S_2023_MA)
-
+attach(data_rural)
+shapiro.test(data_rural$M500_EM_2S_2023_MA)
+bartlett.test(M500_EM_2S_2023_MA~sexo, data_rural)
 nota_m <- data_rural$M500_EM_2S_2023_MA # extraer las notas en forma de vector 
 
 # Q-Q Plot
@@ -30,8 +29,10 @@ print(data_extremos_m)
 
 data_rural_sin <- data_rural[-extremos_m, ]
 shapiro.test(data_rural_sin$M500_EM_2S_2023_MA)  # cumple normalidad 
-qqnorm(data_rural_sin$M500_EM_2S_2023_MA)
-qqline(data_rural_sin$M500_EM_2S_2023_MA, col = "red")
+bartlett.test(data_rural_sin$M500_EM_2S_2023_MA~
+                data_rural_sin$sexo, data = data_rural_sin)
+#qqnorm(data_rural_sin$M500_EM_2S_2023_MA)
+#qqline(data_rural_sin$M500_EM_2S_2023_MA, col = "red")
 hist(data_rural_sin$M500_EM_2S_2023_MA, main = "Histograma de Nota Matemáticas", xlab = "Puntajes")
 
 
@@ -39,15 +40,15 @@ hist(data_rural_sin$M500_EM_2S_2023_MA, main = "Histograma de Nota Matemáticas"
 
 data_rural_sin
 summary(data_rural_sin$M500_EM_2S_2023_MA)
+summarise(data_rural_sin, mean(data_rural_sin$M500_EM_2S_2023_MA), var(M500_EM_2S_2023_MA))
+#### Comprobando normalidad de los estratos 
 
-#### Comprobando normalidad de los grupos 
-
-data_hombre <- data_rural_sin %>% filter(sexo == "Hombre") %>% select(2)
-shapiro.test(data_hombre$M500_EM_2S_2023_MA)   # cumple normalidad 
+data_hombre <- data_rural_sin %>% filter(sexo == "Hombre")
+shapiro.test(data_hombre$M500_EM_2S_2023_MA)   # cumple normalidad
 
 N_h <- nrow(data_hombre)
 
-data_mujer <- data_rural_sin %>% filter(sexo == "Mujer") %>%  select(2)
+data_mujer <- data_rural_sin %>% filter(sexo == "Mujer")
 shapiro.test(data_mujer$M500_EM_2S_2023_MA)    # cumple normalidad 
 
 N_m <- nrow(data_mujer)
