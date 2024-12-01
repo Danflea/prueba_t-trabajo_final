@@ -707,8 +707,63 @@ Dentro de cada estrato, se realizará un muestreo aleatorio simple para
 seleccionar a los estudiantes. De esta manera, se mantendrá la
 aleatoriedad y se evitarán sesgos dentro de cada subgrupo.
 
+\subsubsection*{Tamaño de la muestra}\label{tamauxf1o-de-la-muestra}
+\addcontentsline{toc}{subsubsection}{Tamaño de la muestra}
+
 Determinamos el tamaño de la muestra total por muestreo estratificado
 (n) en 160 estudiantes.
+
+Separamos nuestra población en dos estratos, ``masculino'' y
+``femenino''.
+
+Luego procedemos a estimar el tamaño de cada muestra de cada estrato.
+
+\[n_{mujer}= n*\frac{N_{mujer}}{N}, \quad n_{hombre}= n*\frac{N_{hombre}}{N}, \quad \]
+
+\begin{itemize}
+    \item N: tamaño de la población 
+    \item n: tamaño total de la muestra
+    \item $N_{mujer}$: tamaño de la población solo de mujeres
+    \item $N_{hombre}$: tamaño de la población solo de hombres
+    \item $n_{mujer}$: tamaño de la muestra de mujeres
+    \item $n_{hombre}$: tamaño de la muestra de hombre
+
+\end{itemize}
+
+\[n_{mujer}=84, \quad n_{hombre}=76 \]
+
+\subsubsection*{Extracción de la
+muestra}\label{extracciuxf3n-de-la-muestra}
+\addcontentsline{toc}{subsubsection}{Extracción de la muestra}
+
+En este paso usaremos el paquete \texttt{teachingsamplig} para extraer
+nuestras muestras.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(TeachingSampling)}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{sam }\OtherTok{\textless{}{-}} \FunctionTok{S.STSI}\NormalTok{(data\_rural\_sin}\SpecialCharTok{$}\NormalTok{sexo, }\FunctionTok{c}\NormalTok{(N\_h, N\_m), }\FunctionTok{c}\NormalTok{(n\_h, n\_m))}
+\NormalTok{muestra }\OtherTok{\textless{}{-}}\NormalTok{ data\_rural\_sin[sam,]}
+
+\NormalTok{muestra\_hombre }\OtherTok{\textless{}{-}}\NormalTok{ muestra }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(sexo }\SpecialCharTok{==} \StringTok{"Hombre"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{muestra\_mujer }\OtherTok{\textless{}{-}}\NormalTok{ muestra }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(sexo }\SpecialCharTok{==} \StringTok{"Mujer"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[!h]
+\centering
+\caption{\label{tab:tabla}Resumen de cada muestra}
+\centering
+\begin{tabular}[t]{lrrrrr}
+\toprule
+sexo & Media (\(\bar{x}\)) & Varianza (\(s^{2}\)) & Desviación Estándar (\(s\)) & Tamaño (\(n\)) & Proporción (\(p\))\\
+\midrule
+\cellcolor{gray!10}{Hombre} & \cellcolor{gray!10}{553.216} & \cellcolor{gray!10}{5884.149} & \cellcolor{gray!10}{76.708} & \cellcolor{gray!10}{76} & \cellcolor{gray!10}{0.105}\\
+Mujer & 538.551 & 5948.829 & 77.129 & 84 & 0.116\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection*{Procedimiento}\label{procedimiento}
 \addcontentsline{toc}{subsection}{Procedimiento}

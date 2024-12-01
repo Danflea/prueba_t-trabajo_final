@@ -76,6 +76,8 @@ knitr::opts_chunk$set(
 	message = FALSE,
 	warning = FALSE
 )
+library(pacman)
+p_load(magrittr)
 ```  
   
   
@@ -356,7 +358,82 @@ El uso de un diseño de muestreo estratificado permite dividir la población en 
 
 Dentro de cada estrato, se realizará un muestreo aleatorio simple para seleccionar a los estudiantes. De esta manera, se mantendrá la aleatoriedad y se evitarán sesgos dentro de cada subgrupo.  
 
+### Tamaño de la muestra {-}  
+
 Determinamos el tamaño de la muestra total por muestreo estratificado (n) en 160 estudiantes.  
+
+Separamos nuestra población en dos estratos, "masculino" y "femenino".  
+
+```{r}
+data_hombre <- data_rural_sin %>% filter(sexo == "Hombre")
+data_mujer <- data_rural_sin %>% filter(sexo == "Mujer")
+```  
+
+Luego procedemos a estimar el tamaño de cada muestra de cada estrato.  
+
+$$n_{mujer}= n*\frac{N_{mujer}}{N}, \quad n_{hombre}= n*\frac{N_{hombre}}{N}, \quad $$  
+
+\begin{itemize}
+    \item N: tamaño de la población 
+    \item n: tamaño total de la muestra
+    \item $N_{mujer}$: tamaño de la población solo de mujeres
+    \item $N_{hombre}$: tamaño de la población solo de hombres
+    \item $n_{mujer}$: tamaño de la muestra de mujeres
+    \item $n_{hombre}$: tamaño de la muestra de hombre
+
+\end{itemize}  
+
+
+
+```{r}
+# Estimar el tamaño de cada muestra de población
+N <- nrow(data_rural_sin)
+N_h <- nrow(data_hombre)
+N_m <- nrow(data_mujer)
+n <- 160 # tamaño total de la muestra
+
+n_h <- round(n*N_h/N, 0) # tamaño de muestra de estrato masculino
+n_m <- round(n*N_m/N, 0) # tamaño de muestra de estrao femenino
+```  
+
+$$n_{mujer}=84, \quad n_{hombre}=76 $$  
+  
+### Extracción de la muestra {-}  
+
+En este paso usaremos el paquete `teachingsamplig` para extraer nuestras muestras.  
+
+```{r echo=TRUE}
+library(TeachingSampling)
+set.seed(123)
+sam <- S.STSI(data_rural_sin$sexo, c(N_h, N_m), c(n_h, n_m))
+muestra <- data_rural_sin[sam,]
+
+muestra_hombre <- muestra %>% filter(sexo == "Hombre") %>% select(2)
+muestra_mujer <- muestra %>% filter(sexo == "Mujer") %>% select(2)
+```  
+
+
+
+```{r tabla, echo=FALSE, message=FALSE, warning=FALSE}
+library(kableExtra)
+# Calcula la media, varianza y desviación estándar de MONTO por cada departamento
+resumen_muestra <- muestra %>%
+    group_by(sexo) %>%
+    summarise(
+        "Media (\\(\\bar{x}\\))" = round(mean(M500_EM_2S_2023_MA, na.rm = TRUE),3),
+        "Varianza (\\(s^{2}\\))" = round(var(M500_EM_2S_2023_MA, na.rm = TRUE),3),
+        "Desviación Estándar (\\(s\\))" = round(sd(M500_EM_2S_2023_MA, na.rm=TRUE),3),
+        "Tamaño (\\(n\\))" = n(),
+        "Proporción (\\(p\\))" = round(n()/nrow(data_rural_sin),3)
+        )
+
+# Imprime el resumen en una tabla usando kable
+knitr::kable(resumen_muestra, format = "latex", booktabs = TRUE, escape = FALSE, caption = "Resumen de cada muestra") %>% kable_styling(latex_options = c("striped", "hold_position"), full_width = FALSE)
+
+```
+
+
+
 
 
 
