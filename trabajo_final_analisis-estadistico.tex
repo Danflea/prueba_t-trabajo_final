@@ -131,6 +131,8 @@
 \usepackage{ragged2e}
 \justifying
 \usepackage{tocbibind}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -594,9 +596,6 @@ distribución normal.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(readxl)}
-\FunctionTok{library}\NormalTok{(magrittr)}
-\FunctionTok{library}\NormalTok{(dplyr)}
 \NormalTok{BD }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"BD\_2S ENLA muestral 2023.xlsx"}\NormalTok{)}
 
 \NormalTok{data\_rural }\OtherTok{\textless{}{-}}\NormalTok{ BD }\SpecialCharTok{\%\textgreater{}\%} 
@@ -636,42 +635,6 @@ y se verifica que nuestra población ahora sigue una distribución normal.
 
 \begin{center}\includegraphics{trabajo_final_analisis-estadistico_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
-\subsubsection*{Homogeneidad de
-Varianzas}\label{homogeneidad-de-varianzas}
-\addcontentsline{toc}{subsubsection}{Homogeneidad de Varianzas}
-
-\[H_{0}: \text{Las varianzas de las notas entre hombres y mujeres son iguales.}\]\\
-\[H_{0}: \text{Las varianzas de las notas entre hombres y mujeres son diferentes.}\]
-
-\begin{verbatim}
-## 
-##  Bartlett test of homogeneity of variances
-## 
-## data:  data_rural_sin$M500_EM_2S_2023_MA by data_rural_sin$sexo
-## Bartlett's K-squared = 0.21642, df = 1, p-value = 0.6418
-\end{verbatim}
-
-Dado que \(p_{valor}=0.6418>\alpha=0.05\), no se rechaza la hipótesis
-nula. Esto implica que no hay evidencia estadísticamente significativa
-para afirmar que las varianzas de las notas entre hombres y mujeres son
-diferentes.
-
-\begin{center}\includegraphics{trabajo_final_analisis-estadistico_files/figure-latex/unnamed-chunk-5-1} \end{center}
-
-\begin{table}[!h]
-\centering
-\caption{\label{tab:Estadisticas genero}Resumen de las notas por género}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-sexo & Media (\(\mu\)) & Varianza (\(\sigma^{2}\)) & Desviación Estándar (\(\sigma\)) & Tamaño de la población (\(N\))\\
-\midrule
-\cellcolor{gray!10}{Hombre} & \cellcolor{gray!10}{549.3282} & \cellcolor{gray!10}{4936.985} & \cellcolor{gray!10}{70.26368} & \cellcolor{gray!10}{342}\\
-Mujer & 538.1761 & 4700.335 & 68.55899 & 380\\
-\bottomrule
-\end{tabular}
-\end{table}
-
 \subsection*{Muestra}\label{muestra}
 \addcontentsline{toc}{subsection}{Muestra}
 
@@ -708,7 +671,151 @@ Luego procedemos a estimar el tamaño de cada muestra de cada estrato.
 
 \end{itemize}
 
-\[n_{mujer}=84, \quad n_{hombre}=76 \]
+\subsubsection*{Varianzas poblacionales}\label{varianzas-poblacionales}
+\addcontentsline{toc}{subsubsection}{Varianzas poblacionales}
+
+Para realizar la prueba t de Student para muestras independientes, es
+necesario primero verificar si las varianzas poblacionales son iguales o
+diferentes. Con un nivel de significancia del 5\%, se llevará a cabo una
+prueba de hipótesis para determinar si las varianzas de las dos
+poblaciones son iguales o no.
+
+\begin{table}[!h]
+\centering
+\caption{\label{tab:Estadisticas generos}Resumen de las notas por género}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+sexo & Media (\(\mu\)) & Varianza (\(\sigma^{2}\)) & Desviación Estándar (\(\sigma\)) & Tamaño de la población (\(N\))\\
+\midrule
+\cellcolor{gray!10}{Hombre} & \cellcolor{gray!10}{549.3282} & \cellcolor{gray!10}{4936.985} & \cellcolor{gray!10}{70.26368} & \cellcolor{gray!10}{342}\\
+Mujer & 538.1761 & 4700.335 & 68.55899 & 380\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{enumerate}
+  \item \textbf{Hipótesis nula y alternativa:}
+    \[
+    H_0: \sigma^2_{\text{mujer}} = \sigma^2_{\text{hombre}}
+    \]
+    \[
+    H_1: \sigma^2_{\text{mujer}} \neq \sigma^2_{\text{hombre}}
+    \]
+  \item \textbf{Nivel de significancia:}
+    \[
+    \alpha = 0.05
+    \]
+
+  \item \textbf{Estadístico de prueba:}
+    \[
+    F_k = \frac{S^2_{\text{mujer}}}{S^2_{\text{hombre}}}, \quad F_{84, 76}
+    \]
+
+  \item \textbf{Región crítica:}
+    \begin{figure}[ht]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                domain=0:4,
+                samples=200,
+                xlabel={$F$},
+                ylabel={Densidad},
+                ymin=0,
+                ymax=0.45,
+                axis lines=left,
+                legend pos=north east,
+                title={Distribución F con Región Crítica (dos colas)}
+            ]
+                % Curva de la distribución F
+                \addplot[blue, thick] {((x^2) * exp(-x^2/2) / sqrt(2*pi))};
+                \addlegendentry{Distribución F}
+
+                % Región crítica a la izquierda (F < -1.96)
+                \addplot [
+                    domain=0:0.643,
+                    samples=100,
+                    fill=red,
+                    opacity=0.4,
+                ] {((x^2) * exp(-x^2/2) / sqrt(2*pi))} \closedcycle;
+                \addlegendentry{Región Crítica Izquierda}
+
+                % Región crítica a la derecha (F > 1.96)
+                \addplot [
+                    domain=1.564:4,
+                    samples=100,
+                    fill=red,
+                    opacity=0.4,
+                ] {((x^2) * exp(-x^2/2) / sqrt(2*pi))} \closedcycle;
+                \addlegendentry{Región Crítica Derecha}
+
+                % Línea vertical en Z = 0.643
+                \addplot[red, dashed] coordinates {(0.643, 0) (0.643, 0.1)};
+                \node at (axis cs:0.643,0.13) [anchor=north east, blue] {0.643};
+
+                % Línea vertical en F = 1.564
+                \addplot[red, dashed] coordinates {(1.564, 0) (1.564, 0.1)};
+                \node at (axis cs:1.564,0.13) [anchor=north west, blue] {1.564};
+
+                % Línea vertical en F = 1.012
+                \addplot[black, dashed] coordinates {(1.012, 0) (1.012, 0.15)};
+                \node at (axis cs:1.012,0.18) [anchor=north east] {1.012};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Gráfico de la distribución F con regiones críticas.}
+    \end{figure}  
+   \[
+    RC = F_k < 0.643 \quad \text{o} \quad F_k > 1.564
+    \]
+
+  \item \textbf{Cálculo del estadístico:}
+    \[
+    F_k = \frac{77.12865}{76.70822} = 1.012
+    \]
+
+  \item \textbf{Decisión:}
+    \[
+    F_k = 1.012 \notin RC \quad \text{por lo que no se rechaza } H_0
+    \]
+
+  \item \textbf{Conclusión:}
+    Con un nivel de significancia del 5\% se puede afirmar que las varianzas poblacionales de los estudiantes hombres y mujeres son iguales.
+\end{enumerate}
+
+\subsubsection*{Homogeneidad de Varianzas usando
+Bartlett}\label{homogeneidad-de-varianzas-usando-bartlett}
+\addcontentsline{toc}{subsubsection}{Homogeneidad de Varianzas usando
+Bartlett}
+
+\[H_{0}: \text{Las varianzas de las notas entre hombres y mujeres son iguales.}\]\\
+\[H_{0}: \text{Las varianzas de las notas entre hombres y mujeres son diferentes.}\]
+
+\begin{verbatim}
+## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  data_rural_sin$M500_EM_2S_2023_MA by data_rural_sin$sexo
+## Bartlett's K-squared = 0.21642, df = 1, p-value = 0.6418
+\end{verbatim}
+
+Dado que \(p_{valor}=0.6418>\alpha=0.05\), no se rechaza la hipótesis
+nula. Esto implica que no hay evidencia estadísticamente significativa
+para afirmar que las varianzas de las notas entre hombres y mujeres son
+diferentes.
+
+\begin{center}\includegraphics{trabajo_final_analisis-estadistico_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
+\subsection*{Procedimiento}\label{procedimiento}
+\addcontentsline{toc}{subsection}{Procedimiento}
+
+\subsubsection*{Desarrollo de la Hipótesis
+General}\label{desarrollo-de-la-hipuxf3tesis-general}
+\addcontentsline{toc}{subsubsection}{Desarrollo de la Hipótesis General}
+
+Se desea determinar si existe una diferencia estadísticamente
+significativa en las notas promedio de matemáticas entre estudiantes
+mujeres y hombres en zonas rurales de Ayacucho. Con un nivel de
+significancia del 5\%, se cuenta con los siguientes datos muestrales:
 
 \subsubsection*{Extracción de la
 muestra}\label{extracciuxf3n-de-la-muestra}
@@ -731,80 +838,7 @@ nuestras muestras.
 
 \begin{table}[!h]
 \centering
-\caption{\label{tab:tabla}Resumen de cada muestra}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-sexo & Media (\(\bar{x}\)) & Varianza (\(s^{2}\)) & Desviación Estándar (\(s\)) & Tamaño (\(n\))\\
-\midrule
-\cellcolor{gray!10}{Hombre} & \cellcolor{gray!10}{553.216} & \cellcolor{gray!10}{5884.149} & \cellcolor{gray!10}{76.708} & \cellcolor{gray!10}{76}\\
-Mujer & 538.551 & 5948.829 & 77.129 & 84\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsubsection*{Varianzas poblacionales}\label{varianzas-poblacionales}
-\addcontentsline{toc}{subsubsection}{Varianzas poblacionales}
-
-Para realizar la prueba t de Student para muestras independientes, es
-necesario primero verificar si las varianzas poblacionales son iguales o
-diferentes. Con un nivel de significancia del 5\%, se llevará a cabo una
-prueba de hipótesis para determinar si las varianzas de las dos
-poblaciones son iguales o no.
-
-\begin{enumerate}
-  \item \textbf{Hipótesis nula y alternativa:}
-    \[
-    H_0: \sigma^2_{\text{mujer}} = \sigma^2_{\text{hombre}}
-    \]
-    \[
-    H_1: \sigma^2_{\text{mujer}} \neq \sigma^2_{\text{hombre}}
-    \]
-  \item \textbf{Nivel de significancia:}
-    \[
-    \alpha = 0.05
-    \]
-
-  \item \textbf{Estadístico de prueba:}
-    \[
-    F_k = \frac{S^2_{\text{mujer}}}{S^2_{\text{hombre}}}, \quad F_{83, 75}
-    \]
-
-  \item \textbf{Región crítica:}
-  
-   \[
-    RC = F_k < 0.643 \quad \text{o} \quad F_k > 1.564
-    \]
-
-  \item \textbf{Cálculo del estadístico:}
-    \[
-    F_k = \frac{77.12865}{76.70822} = 1.012
-    \]
-
-  \item \textbf{Decisión:}
-    \[
-    F_k = 1.012 \notin RC \quad \text{por lo que no se rechaza } H_0
-    \]
-
-  \item \textbf{Conclusión:}
-    Con un nivel de significancia del 5\% se puede afirmar que las varianzas poblacionales de los estudiantes hombres y mujeres son iguales.
-\end{enumerate}
-
-\subsection*{Procedimiento}\label{procedimiento}
-\addcontentsline{toc}{subsection}{Procedimiento}
-
-\subsubsection*{Desarrollo de la Hipótesis
-General}\label{desarrollo-de-la-hipuxf3tesis-general}
-\addcontentsline{toc}{subsubsection}{Desarrollo de la Hipótesis General}
-
-Se desea determinar si existe una diferencia estadísticamente
-significativa en las notas promedio de matemáticas entre estudiantes
-mujeres y hombres en zonas rurales de Ayacucho. Con un nivel de
-significancia del 5\%, se cuenta con los siguientes datos muestrales:
-
-\begin{table}[!h]
-\centering
-\caption{\label{tab:unnamed-chunk-9}Resumen de cada muestra}
+\caption{\label{tab:tablasss}Resumen de cada muestra}
 \centering
 \begin{tabular}[t]{lrrrr}
 \toprule
@@ -847,11 +881,59 @@ Mujer & 538.551 & 5948.829 & 77.129 & 84\\
     \]
 
   \item \textbf{Región Crítica:}
+    \begin{figure}[ht]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                domain=-4:4,
+                samples=200,
+                xlabel={$t$},
+                ylabel={Densidad},
+                ymin=0,
+                ymax=0.45,
+                axis lines=left,
+                legend pos=north east,
+                title={Distribución t con Región Crítica}
+            ]
+                % Curva de la distribución t
+                \addplot[blue, thick] {exp(-x^2 / 2) / sqrt(2 * pi)};
+                \addlegendentry{Distribución t}
+
+                % Región crítica a la izquierda (t < -1.96)
+                \addplot [
+                    domain=-4:-1.96,
+                    samples=100,
+                    fill=red,
+                    opacity=0.5,
+                ] {exp(-x^2 / 2) / sqrt(2 * pi)} \closedcycle;
+                \addlegendentry{Región Crítica Izquierda}
+
+                % Región crítica a la derecha (t > 1.96)
+                \addplot [
+                    domain=1.96:4,
+                    samples=100,
+                    fill=red,
+                    opacity=0.5,
+                ] {exp(-x^2 / 2) / sqrt(2 * pi)} \closedcycle;
+                \addlegendentry{Región Crítica Derecha}
+
+                % Línea vertical en t = -1.975
+                \addplot[red, dashed] coordinates {(-1.975, 0) (-1.975, 0.1)};
+                \node at (axis cs:-1.975,0.13) [anchor=north east, blue] {-1.975};
+
+                % Línea vertical en t = 1.975
+                \addplot[red, dashed] coordinates {(1.975, 0) (1.975, 0.1)};
+                \node at (axis cs:1.975,0.13) [anchor=north west, blue] {1.975};
+
+                % Línea vertical en t = -1.2
+                \addplot[black, dashed] coordinates {(-1.2, 0) (-1.2, 0.15)};
+                \node at (axis cs:-1.2,0.18) [anchor=north east] {-1.2};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Gráfico de la distribución t con regiones críticas.}
+    \end{figure}
     \[
-    t_{0.025, 158} = 0.314 \quad \text{y} \quad t_{0.975, 158} = 2.263
-    \]
-    \[
-    RC = t_k < 0.314 \quad \text{o} \quad t_k > 2.263
+    t_{0.025, 158} = -1.975 \quad \text{y} \quad t_{0.975, 158} = 1.975
     \]
     \item \textbf{Cálculo del estadístico y grados de libertad:}
     \[
@@ -923,7 +1005,45 @@ mujeres en zonas rurales de Ayacucho. Con un nivel de significancia del
     t = \frac{538.5511 - 553.2158}{\sqrt{5911.71 \cdot \left( \frac{1}{76} + \frac{1}{84} \right)}} = \frac{-14.6647}{12.46} = -1.1765
     \]
   \item \textbf{Región crítica:}
-    \[
+    \begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            domain=-4:4,
+            samples=200,
+            xlabel={Valores de \( t \)},
+            ylabel={Densidad de probabilidad},
+            ymin=0,
+            ymax=0.45,
+            axis lines=left,
+            legend pos=north east,
+            title={Distribución \( t \) de student para muestras independientes (una cola)}
+        ]
+            % Curva de la distribución t de student
+            \addplot[blue, thick] {exp(-x^2 / 2) / sqrt(2 * pi)};
+            \addlegendentry{Distribución \( t \)}
+
+            % Región crítica (x >= 1.645)
+            \addplot [
+                domain=1.645:4,
+                samples=100,
+                fill=red,
+                opacity=0.5,
+            ] {exp(-x^2 / 2) / sqrt(2 * pi)} \closedcycle;
+            \addlegendentry{Región Crítica}
+
+            % Línea vertical en valor crítico (1.645)
+            \addplot[brown, dashed, thick] coordinates {(1.645, 0) (1.645, 0.2)};
+            \node at (axis cs:1.645,0.2) [anchor=north west, brown] {\( t = 1.645 \)};
+
+            % Línea vertical en \( t \) calculado (-1.1765)
+            \addplot[green, dashed, thick] coordinates {(-1.1765, 0) (-1.1765, 0.13)};
+            \node at (axis cs:-0.010,0.13) [anchor=north east, black] {\( t_{k} = -1.1765 \)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Distribución \( t \) con región crítica y estadístico calculado.}
+   \end{figure}
+   \[
     RC = t > 1.65 \quad \text{(con } t_{0.05, 158} = 1.65\text{)}
     \]
 
@@ -980,14 +1100,64 @@ hombres y mujeres son diferentes}
     \]
 
   \item \textbf{Región crítica:}
-    \[
+    \begin{figure}[ht]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                domain=-4:4,
+                samples=200,
+                xlabel={$Z$},
+                ylabel={Densidad},
+                ymin=0,
+                ymax=0.45,
+                axis lines=left,
+                legend pos=north east,
+                title={Distribución Z con Región Crítica}
+            ]
+                % Curva de la distribución normal estándar
+                \addplot[blue, thick] {exp(-x^2 / 2) / sqrt(2 * pi)};
+                \addlegendentry{Distribución Z}
+
+                % Región crítica a la izquierda (Z < -1.96)
+                \addplot [
+                    domain=-4:-1.96,
+                    samples=100,
+                    fill=red,
+                    opacity=0.5,
+                ] {exp(-x^2 / 2) / sqrt(2 * pi)} \closedcycle;
+                \addlegendentry{Región Crítica Izquierda}
+
+                % Región crítica a la derecha (Z > 1.96)
+                \addplot [
+                    domain=1.96:4,
+                    samples=100,
+                    fill=red,
+                    opacity=0.5,
+                ] {exp(-x^2 / 2) / sqrt(2 * pi)} \closedcycle;
+                \addlegendentry{Región Crítica Derecha}
+
+                % Línea vertical en Z = -1.96
+                \addplot[red, dashed] coordinates {(-1.96, 0) (-1.96, 0.1)};
+                \node at (axis cs:-1.96,0.13) [anchor=north east, blue] {-1.96};
+
+                % Línea vertical en Z = 1.96
+                \addplot[red, dashed] coordinates {(1.96, 0) (1.96, 0.1)};
+                \node at (axis cs:1.96,0.13) [anchor=north west, blue] {1.96};
+
+                % Línea vertical en Z = -0.35
+                \addplot[black, dashed] coordinates {(-0.35, 0) (-0.35, 0.15)};
+                \node at (axis cs:-0.35,0.18) [anchor=north east] {-0.35};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Gráfico de la distribución Z con regiones críticas.}
+    \end{figure}   
+   \[
     Z_{0.975} = 1.96, \quad Z_{0.025} = -1.96
     \]
     La región crítica es:
     \[
     RC = Z_k < -1.96 \quad \text{o} \quad Z_k > 1.96
     \]
-
   \item \textbf{Cálculo del estadístico:}
     Ahora calculamos el estadístico \(z\):
     \[
@@ -1019,20 +1189,20 @@ las estudiantes mujeres en zonas rurales de Ayacucho. Con un nivel de
 significancia del 5\%, se cuenta con los siguientes datos muestrales:
 
 \begin{enumerate}
-  \item \textbf{Hipótesis nula y alternativa:}
+    \item \textbf{Hipótesis nula y alternativa:}
     \[
     H_0: \mu_{\text{hombres}} - \mu_{\text{mujeres}} \leq 15
     \]
     \[
     H_1: \mu_{\text{hombres}} - \mu_{\text{mujeres}} > 15
     \]
-    
-  \item \textbf{Nivel de significancia:}
+
+   \item \textbf{Nivel de significancia:}
     \[
     \alpha = 0.05
     \]
-    
-  \item \textbf{Estadístico de prueba:}
+
+   \item \textbf{Estadístico de prueba:}
     La fórmula del estadístico \( t \) para muestras independientes con varianzas iguales es:
     \[
     t = \frac{X_{\text{hombres}} - X_{\text{mujeres}} - (\mu_{\text{hombres}} - \mu_{\text{mujeres}})}{\sqrt{\frac{S_{\text{hombres}}^2}{n_{\text{hombres}}} + \frac{S_{\text{mujeres}}^2}{n_{\text{mujeres}}}}}
@@ -1042,7 +1212,7 @@ significancia del 5\%, se cuenta con los siguientes datos muestrales:
     X_{\text{hombres}} = 553.2158, \quad X_{\text{mujeres}} = 538.5511, \quad n_{\text{hombres}} = 76, \quad n_{\text{mujeres}} = 84
     \]
 
-  La desviación estándar combinada \( S_c \) se calcula como:
+   La desviación estándar combinada \( S_c \) se calcula como:
     \[
     S_c = \sqrt{\frac{(n_{\text{hombres}} - 1) S_{\text{hombres}}^2 + (n_{\text{mujeres}} - 1) S_{\text{mujeres}}^2}{n_{\text{hombres}} + n_{\text{mujeres}} - 2}}
     \]
@@ -1051,17 +1221,55 @@ significancia del 5\%, se cuenta con los siguientes datos muestrales:
     S_{\text{hombres}} = 76.7082, \quad S_{\text{mujeres}} = 77.12865
     \]
 
-  Reemplazando los valores:
+   Reemplazando los valores:
     \[
     S_c = \sqrt{\frac{(84 - 1) (77.12865)^2 + (76 - 1) (76.70822)^2}{84 + 76 - 2}} = 76.93
     \]
 
-  Ahora hallamos \( t \):
+   Ahora hallamos \( t \):
     \[
     t = \frac{553.2158 - 538.5511 - 15}{\sqrt{\frac{76.93^2}{84} + \frac{76.93^2}{76}}} = \frac{553.2158 - 538.5511 - 15}{12.1789} = -0.027
     \]
 
   \item \textbf{Región crítica:}
+    \begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            domain=-4:4,
+            samples=200,
+            xlabel={Valores de \( t \)},
+            ylabel={Densidad de probabilidad},
+            ymin=0,
+            ymax=0.45,
+            axis lines=left,
+            legend pos=north east,
+            title={Distribución \( t \) de student con Región Crítica (una cola)}
+        ]
+            % Curva de la distribución t de student
+            \addplot[blue, thick] {exp(-x^2 / 2) / sqrt(2 * pi)};
+            \addlegendentry{Distribución \( t \)}
+
+            % Región crítica (x >= 1.645)
+            \addplot [
+                domain=1.645:4,
+                samples=100,
+                fill=red,
+                opacity=0.5,
+            ] {exp(-x^2 / 2) / sqrt(2 * pi)} \closedcycle;
+            \addlegendentry{Región Crítica}
+
+            % Línea vertical en valor crítico (1.645)
+            \addplot[brown, dashed, thick] coordinates {(1.645, 0) (1.645, 0.2)};
+            \node at (axis cs:1.645,0.2) [anchor=north west, brown] {\( t = 1.645 \)};
+
+            % Línea vertical en \( t \) calculado (-0.027)
+            \addplot[green, dashed, thick] coordinates {(-0.027, 0) (-0.027, 0.13)};
+            \node at (axis cs:-0.010,0.13) [anchor=north east, black] {\( t_{k} = -0.027 \)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Distribución \( t \) con región crítica y estadístico calculado.}
+   \end{figure}
     La región crítica se define como:
     \[
     t_{0.05, 158} = 1.645
@@ -1070,11 +1278,11 @@ significancia del 5\%, se cuenta con los siguientes datos muestrales:
     RC: t_k < -1.645 \quad \text{o} \quad t_k > 1.645
     \]
 
-  \item \textbf{Decisión:}
+    \item \textbf{Decisión:}
     Como \( t_k = -0.027 \) no está en la región crítica, no se rechaza la hipótesis nula \( H_0 \).
 
-  \item \textbf{Conclusión:}
-    Con un nivel de significancia del 5\%, no hay suficiente evidencia para afirmar que las medias de las notas de los estudiantes hombres superan en más de 15 puntos el promedio de las estudiantes mujeres en matemáticas en las zonas rurales de Ayacucho.
+    \item \textbf{Conclusión:}
+    Con un nivel de significancia del 5\%, no hay suficiente evidencia para afirmar que las medias de las   notas de los estudiantes hombres superan en más de 15 puntos el promedio de las estudiantes mujeres en matemáticas en las zonas rurales de Ayacucho.
 \end{enumerate}
 
 \section*{Resultados}\label{resultados}
