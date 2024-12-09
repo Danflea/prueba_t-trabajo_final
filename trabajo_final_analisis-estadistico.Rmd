@@ -39,16 +39,19 @@ csl: "apa.csl"
 
 \begin{center}
 \textbf{Integrantes:}
+\end{center}  
 
-\begin{tabbing}
-    \hspace{2cm} Estrella Guerra, Danilo David \quad \= \quad         20220763 \\
-    \hspace{2cm} Gómez Vigo, Héctor Estéfano   \quad \= \quad      20230397 \\
-    \hspace{2cm} Montufar Paiva, Yeraldi Mercedes \quad  20230400 \\
-    \hspace{2cm} Rojas Taco, Fabiana Romina    \quad \= \quad      20220956 \\
-    \hspace{2cm} Zavala Malpartida, Kay Daniela L. \quad 20230420 \\
-\end{tabbing}
-
-\end{center}
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.5} % Ajusta el espaciado entre filas
+\begin{tabular}{p{8cm}r}
+Estrella Guerra, Danilo David \dotfill & 20220763 \\ 
+Gómez Vigo, Héctor Estéfano \dotfill & 20230397 \\ 
+Montufar Paiva, Yeraldi Mercedes \dotfill   & 20230400 \\ 
+Rojas Taco, Fabiana Romina \dotfill & 20220956 \\ 
+Zavala Malpartida, Kay Daniela L. \dotfill  & 20230420 \\ 
+\end{tabular}
+\end{table}
 
 \end{large}
 
@@ -270,7 +273,7 @@ A continuación, se describen las principales variables del estudio, indicando s
 
 ## Población {-}  
 
-La población de este estudio está constituida por todas las instituciones educativas de la región de Ayacucho que imparten educación básica regular.  
+La población de este estudio está constituida por todas las instituciones educativas de la región de Ayacucho de la zona rural que imparten educación básica regular y tiene un tamaño de 722 alumnos.  
   
   
 Esto incluye escuelas públicas y privadas que presentan características similares en términos de gestión y nivel educativo. La población se delimita temporalmente al año académico 2023, lo que permite una evaluación actualizada y pertinente del nivel educativo en el área de matemáticas.  
@@ -444,7 +447,7 @@ knitr::kable(resumen_nota, format = "latex", booktabs = TRUE, escape = FALSE,
 
   \item \textbf{Cálculo del estadístico:}
     \[
-    F_k = \frac{77.12865}{76.70822} = 1.012
+    F_k = \frac{77.12865^{2}}{76.70822^{2}} = 1.012
     \]
 
   \item \textbf{Decisión:}
@@ -630,11 +633,11 @@ knitr::kable(resumen_muestra, format = "latex", booktabs = TRUE, escape = FALSE,
     \]
     \item \textbf{Decisión:}
     \[
-    t_k = -1.2 \notin RC \quad \text{por lo que se rechaza } H_0
+    t_k = -1.2 \in RC \quad \text{por lo que no se rechaza } H_0
     \]
 
   \item \textbf{Conclusión:}
-    Con un nivel de significancia del 5\%, hay suficiente evidencia para afirmar que los estudiantes hombres y mujeres en las áreas rurales de Ayacucho tienen notas promedio diferentes en matemáticas. Es decir, la diferencia observada en las medias de las notas no es atribuible al azar, y existe una diferencia significativa en el rendimiento académico entre ambos géneros en esta región.
+    Con un nivel de significancia del 5\%, hay suficiente evidencia para afirmar que los estudiantes hombres y mujeres en las áreas rurales de Ayacucho tienen notas promedio diferentes en matemáticas. Es decir, la diferencia observada en las medias de las notas podría ser atribuible al azar, y no se puede concluir que exista una diferencia significativa en el rendimiento académico entre ambos géneros en esta región.
     
 \end{enumerate}  
 
@@ -1002,19 +1005,21 @@ Determinar si existe una diferencia significativa en el rendimiento académico e
 
 # Conclusiones {-}  
 
-\begin{enumerate}
-  \item \textbf{Conclusión del Objetivo General:}
-    No se encontró una diferencia estadísticamente significativa en el rendimiento académico promedio en matemáticas entre hombres y mujeres en zonas rurales de Ayacucho. La diferencia observada puede atribuirse al azar.
+**Conclusión del Objetivo General**:  
+
+No se encontró una diferencia estadísticamente significativa en el rendimiento académico promedio en matemáticas entre hombres y mujeres en zonas rurales de Ayacucho. La diferencia observada puede atribuirse al azar.
     
-  \item \textbf{Conclusión del Objetivo Específico 1:}
-    No hay suficiente evidencia para afirmar que los hombres tienen un promedio de notas en matemáticas mayor que las mujeres en zonas rurales de Ayacucho.
+**Conclusión del Objetivo Específico 1**:  
+
+No hay suficiente evidencia para afirmar que los hombres tienen un promedio de notas en matemáticas mayor que las mujeres en zonas rurales de Ayacucho.
     
-  \item \textbf{Conclusión del Objetivo Específico 2:}
-    Con un nivel de significancia del 5%, no hay suficiente evidencia para afirmar que las proporciones de estudiantes aprobados en matemáticas entre mujeres y hombres en las zonas rurales de Ayacucho son diferentes. Las tasas de aprobación son similares para ambos géneros.
+**Conclusión del Objetivo Específico 2**:  
+
+Con un nivel de significancia del 5%, no hay suficiente evidencia para afirmar que las proporciones de estudiantes aprobados en matemáticas entre mujeres y hombres en las zonas rurales de Ayacucho son diferentes. Las tasas de aprobación son similares para ambos géneros.
     
-  \item \textbf{Conclusión del Objetivo Específico 3:}
-    Con una significancia del 5% no podemos afirmar que el promedio de las notas de los hombres en el curso de matemáticas supera en más de 15 puntos al promedio de las mujeres.
-\end{enumerate}
+**Conclusión del Objetivo Específico 3**:  
+
+Con una significancia del 5% no podemos afirmar que el promedio de las notas de los hombres en el curso de matemáticas supera en más de 15 puntos al promedio de las mujeres.
 
 
 \newpage

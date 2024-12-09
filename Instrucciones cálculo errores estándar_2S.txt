@@ -1,8 +1,0 @@
-Pasos para el calculo de los Errores estándar (ee):
-
-1.- Abrir el archivo con el nombre :"Calculo de errores estandar ENLA muestral 2S 2023.R".
-2.- Redireccionar la Sintaxis en la carpeta donde está el archivo a trabajar.
-3.- Seleccionar toda la sintaxis que se observa.
-4.- Presione las teclas "Control"+"R".
-5.- Se generara automaticamenente tres archivos en excel con los errores estándar de lectura, matemática y ciencias sociales respectivamente. El proceso podría demorar de acuerdo a la cantidad de resultados que desee obtener.
-6.- Los errores estándar (ee) de cada medida se encontrarán seguido de la medida deseada.
